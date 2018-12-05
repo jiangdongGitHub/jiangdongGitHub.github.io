@@ -164,7 +164,8 @@
         };
         var createHTML = function(){
             var html = [ '<ul>' ];
-            member.forEach(function(item, index){
+            var kMem = member.slice(0, 50); // 新增参数kMem,为页面动画渲染个数，现在是0 - 100，可自己再进行修改
+            kMem.forEach(function(item, index){ // 修改后，把以前member的改成kMem
                 item.index = index;
                 var key = getKey(item);
                 var color = choosed[key] ? 'yellow' : 'white';
@@ -180,17 +181,19 @@
             var color = '#' + ('00000' + Math.floor(Math.random() * 0xffffff)).slice(-6);
             var color = 'yellow';
             for(var i = 0; i < count; i++){
-                do {
-                    var id = Math.ceil(Math.random() * total);
-                    if(member[id]){
-                        var key = getKey(member[id]);
-                    }
-                } while(choosed[key]);
-                choosed[key] = 1;
+                // 取消颜色功能
+                // do {
+                //     var id = Math.ceil(Math.random() * total);
+                //     if(member[id]){
+                //         var key = getKey(member[id]);
+                //     }
+                // } while(choosed[key]);
+                // choosed[key] = 1;
+                var id = Math.ceil(Math.random() * total); // 去掉颜色功能后，直接获取随机ID
                 ret.push(member[id].name + '<br/>' + member[id].phone);
-                list[id].style.color = color;
+                // list[id].style.color = color;
             }
-            localStorage.setItem('choosed', JSON.stringify(choosed));
+            // localStorage.setItem('choosed', JSON.stringify(choosed));
             return ret;
         };
         var canvas = document.createElement('canvas');
@@ -203,7 +206,7 @@
             data: {
                 selected: 30,
                 running: false,
-                btns: [
+                btns: [ // 可选择随机的个数
                     30, 10, 5, 2, 1
                 ]
             },
